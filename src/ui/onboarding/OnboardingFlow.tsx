@@ -5,6 +5,7 @@ import { useSettings, type ProfileId } from '../../stores/settings';
 import { useT } from '../../i18n';
 import { Button } from '../common/Button';
 import { seedCylinders } from '../../profiles/lpg/seed';
+import { restaurantSampleTables } from '../../profiles/restaurant/seed';
 
 interface Props { db: TindaDB; }
 
@@ -46,6 +47,9 @@ export function OnboardingFlow({ db }: Props) {
     }
     if (profileId === 'lpg') {
       await db.cylinders.bulkPut(seedCylinders());
+    }
+    if (profileId === 'restaurant') {
+      await db.diningTables.bulkPut(restaurantSampleTables());
     }
     await setStore(storeName.trim(), profileId);
     setBusy(false);

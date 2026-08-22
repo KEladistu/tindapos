@@ -45,12 +45,17 @@ export interface SaleLineRow {
   lineTotalCentavos: number;
   notes?: string;
   extras?: Record<string, unknown>;
+  orderId?: string;
 }
 export interface DiscountRow {
   id: string;
   saleId: string;
   type: 'senior'|'pwd'|'manual';
   amountCentavos: number;
+  name?: string;
+  idNumber?: string;
+  vatExemptCentavos?: number;
+  netCentavos?: number;
 }
 export interface CylinderRow {
   id: string;
@@ -75,8 +80,24 @@ export interface DeliveryRow {
   createdAt: number;
   updatedAt: number;
 }
-export interface TableRow { id: string; mapX: number; mapY: number; status: string; }
-export interface OrderRow { id: string; tableId: string; status: string; }
+export interface TableRow {
+  id: string;
+  mapX: number;
+  mapY: number;
+  status: 'available' | 'occupied' | 'reserved' | 'cleaning' | string;
+  name?: string;
+}
+export interface OrderRow {
+  id: string;
+  tableId: string;
+  status: 'open' | 'sent' | 'served' | 'paid' | 'void' | string;
+  mode?: 'dine-in' | 'takeout';
+  queueNumber?: number;
+  createdAt?: number;
+  updatedAt?: number;
+  sentAt?: number;
+  saleId?: string;
+}
 export interface AuditLogRow { id?: number; ts: number; kind: string; payload?: unknown; }
 
 export class TindaDB extends Dexie {
@@ -98,6 +119,23 @@ export class TindaDB extends Dexie {
 
   constructor() {
     super('tindapos');
+    this.version(1).stores({
+      settings: 'key',
+      users: 'id, role',
+      categories: 'id, order',
+      items: 'id, categoryId, archived, [categoryId+order]',
+      photos: 'id',
+      customers: 'id, name, balanceCentavos',
+      utangEntries: 'id, customerId, saleId, ts',
+      sales: 'id, ts, userId, paymentMethod, status',
+      saleLines: 'id, saleId, itemId',
+      discounts: 'id, saleId, type',
+      cylinders: 'id, sku, state',
+      deliveries: 'id, saleId, status, riderId',
+      diningTables: 'id, mapX, mapY, status',
+      orders: 'id, tableId, status',
+      auditLog: '++id, ts, kind'
+    });
     this.version(2).stores({
       settings: 'key',
       users: 'id, role',
@@ -113,6 +151,25 @@ export class TindaDB extends Dexie {
       deliveries: 'id, saleId, status, riderId',
       diningTables: 'id, mapX, mapY, status',
       orders: 'id, tableId, status',
+      auditLog: '++id, ts, kind'
+    });
+    // Phase 4: add orderId index on saleLines, mode/queueNumber on orders.
+    // All new fields are additive; existing rows remain valid.
+    this.version(3).stores({
+      settings: 'key',
+      users: 'id, role',
+      categories: 'id, order',
+      items: 'id, categoryId, archived, [categoryId+order]',
+      photos: 'id',
+      customers: 'id, name, balanceCentavos',
+      utangEntries: 'id, customerId, saleId, ts',
+      sales: 'id, ts, userId, paymentMethod, status',
+      saleLines: 'id, saleId, itemId, orderId',
+      discounts: 'id, saleId, type',
+      cylinders: 'id, sku, state',
+      deliveries: 'id, saleId, status, riderId',
+      diningTables: 'id, mapX, mapY, status',
+      orders: 'id, tableId, status, mode, queueNumber',
       auditLog: '++id, ts, kind'
     });
   }

@@ -12,7 +12,7 @@ export interface RegistryEntry {
 export const profileRegistry: Record<BusinessProfile['id'], RegistryEntry> = {
   'sari-sari': { profile: sariSariProfile, available: true },
   'lpg':       { profile: lpgProfile,      available: true },
-  'restaurant':{ profile: restaurantProfile, available: false }
+  'restaurant':{ profile: restaurantProfile, available: true }
 };
 
 export function getProfile(id: BusinessProfile['id']): BusinessProfile {
