@@ -15,19 +15,45 @@ export default function App() {
   const editing = useEditor((s) => s.enabled);
   const toggleEditor = useEditor((s) => s.toggle);
   const [loading, setLoading] = useState(true);
+  const [bootError, setBootError] = useState<Error | null>(null);
 
   useEffect(() => {
     (async () => {
-      await hydrate();
-      await hydrateEditorSettings();
-      setLoading(false);
+      try {
+        await hydrate();
+        await hydrateEditorSettings();
+      } catch (e) {
+        console.error('[TindaPOS boot]', e);
+        setBootError(e as Error);
+      } finally {
+        setLoading(false);
+      }
     })();
   }, [hydrate]);
 
+  if (bootError) {
+    return (
+      <div className="h-full p-6 overflow-auto bg-slate-50">
+        <div className="max-w-xl mx-auto bg-white border border-red-200 rounded-lg p-5 shadow-sm">
+          <h1 className="text-lg font-bold text-red-700 mb-2">Boot failed</h1>
+          <pre className="text-xs bg-slate-100 p-3 rounded overflow-auto whitespace-pre-wrap text-slate-800 mb-4">
+{String(bootError.stack || bootError.message || bootError)}
+          </pre>
+          <button
+            className="px-3 py-2 rounded bg-red-600 text-white"
+            onClick={async () => { indexedDB.deleteDatabase('tindapos'); location.reload(); }}
+          >
+            Reset local data & reload
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   if (loading || !hydrated) {
     return (
-      <div className="h-full flex items-center justify-center text-slate-500">
-        Loading…
+      <div className="h-full flex items-center justify-center bg-slate-50">
+        <div className="text-lg font-semibold text-amber-600">TindaPOS — Loading…</div>
       </div>
     );
   }

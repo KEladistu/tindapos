@@ -1,6 +1,6 @@
 import type { SeedItem } from '../types';
 import type { CylinderRow } from '../../db/schema';
-import { LPG_BRANDS, LPG_SIZES, skuFor } from './profile';
+import { LPG_BRANDS, LPG_SIZES, skuFor } from './constants';
 
 const REFILL_PRICES: Record<number, number> = {
   2.7: 25000,
