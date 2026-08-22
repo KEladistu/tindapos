@@ -4,14 +4,20 @@ import { useSettings } from './stores/settings';
 import { OnboardingFlow } from './ui/onboarding/OnboardingFlow';
 import { POSScreen } from './ui/pos/POSScreen';
 import { t } from './i18n';
+import { useSession } from './stores/session';
+import { useEditor, hydrateEditorSettings } from './stores/editor';
 
 export default function App() {
   const { language, setLanguage, hydrate, hydrated, storeName, profileId } = useSettings();
+  const role = useSession((s) => s.role);
+  const editing = useEditor((s) => s.enabled);
+  const toggleEditor = useEditor((s) => s.toggle);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
       await hydrate();
+      await hydrateEditorSettings();
       setLoading(false);
     })();
   }, [hydrate]);
@@ -33,6 +39,11 @@ export default function App() {
         {onboarded && (
           <div className="text-sm text-slate-600 truncate">{storeName}</div>
         )}
+        {editing && (
+          <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500 text-white">
+            {t('editor.editingBadge')}
+          </span>
+        )}
         <div className="ml-auto flex items-center gap-2">
           <button
             className="btn-ghost text-sm px-3 min-h-[40px]"
@@ -41,13 +52,15 @@ export default function App() {
           >
             {language === 'en' ? 'EN' : 'TL'}
           </button>
-          <button
-            className="btn-ghost text-sm px-3 min-h-[40px] opacity-50 cursor-not-allowed"
-            disabled
-            title={t('header.editorDisabled')}
-          >
-            {t('header.editor')}
-          </button>
+          {onboarded && role === 'owner' && (
+            <button
+              className={`text-sm px-3 min-h-[40px] rounded ${editing ? 'bg-amber-500 text-white' : 'btn-ghost'}`}
+              onClick={toggleEditor}
+              title={t('header.editor')}
+            >
+              {editing ? t('editor.exit') : t('header.editor')}
+            </button>
+          )}
         </div>
       </header>
       <main className="flex-1 overflow-hidden">

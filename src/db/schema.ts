@@ -10,6 +10,7 @@ export interface ItemRow {
   priceCentavos: number;
   stock: number;
   icon?: string;
+  photoBlobId?: string;
   order: number;
   archived: 0|1;
   extras?: Record<string, unknown>;

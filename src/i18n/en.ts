@@ -33,7 +33,26 @@ const en: Record<string, string> = {
   'cat.toiletries': 'Toiletries',
   'cat.canned': 'Canned',
   'cat.noodles': 'Noodles',
-  'cat.all': 'All'
+  'cat.all': 'All',
+
+  'editor.editingBadge': 'EDITING',
+  'editor.columns': 'Columns',
+  'editor.undo': 'Undo',
+  'editor.exit': 'Exit editor',
+  'editor.addItem': 'Add item',
+  'editor.addCategory': 'Add category',
+  'editor.newCategoryName': 'New category name',
+  'editor.delete': 'Delete',
+  'editor.name': 'Name',
+  'editor.price': 'Price',
+  'editor.cancel': 'Cancel',
+  'editor.save': 'Save',
+  'editor.chooseIcon': 'Icon',
+  'editor.choosePhoto': 'Photo',
+  'editor.dropImage': 'Drop image here',
+  'editor.confirmDeleteItem': 'Delete "{name}"?',
+  'editor.confirmDeleteCategory': 'Delete category "{name}"?',
+  'editor.categoryNotEmpty': 'Category is not empty — move or delete its items first.'
 };
 
 export default en;

@@ -33,7 +33,26 @@ const tl: Record<string, string> = {
   'cat.toiletries': 'Panligo',
   'cat.canned': 'De Lata',
   'cat.noodles': 'Pancit',
-  'cat.all': 'Lahat'
+  'cat.all': 'Lahat',
+
+  'editor.editingBadge': 'INEEDIT',
+  'editor.columns': 'Hanay',
+  'editor.undo': 'Bawiin',
+  'editor.exit': 'Tapusin ang pag-edit',
+  'editor.addItem': 'Magdagdag ng item',
+  'editor.addCategory': 'Magdagdag ng kategorya',
+  'editor.newCategoryName': 'Pangalan ng bagong kategorya',
+  'editor.delete': 'Alisin',
+  'editor.name': 'Pangalan',
+  'editor.price': 'Presyo',
+  'editor.cancel': 'Kanselahin',
+  'editor.save': 'I-save',
+  'editor.chooseIcon': 'Icon',
+  'editor.choosePhoto': 'Larawan',
+  'editor.dropImage': 'I-drop ang larawan dito',
+  'editor.confirmDeleteItem': 'Alisin ang "{name}"?',
+  'editor.confirmDeleteCategory': 'Alisin ang kategoryang "{name}"?',
+  'editor.categoryNotEmpty': 'May laman pa ang kategorya — alisin muna ang mga item.'
 };
 
 export default tl;
