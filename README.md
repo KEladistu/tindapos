@@ -1,25 +1,41 @@
 # TindaPOS
 
-Offline-first Progressive Web App (PWA) point-of-sale for Philippine small businesses (sari-sari stores, LPG dealers, small restaurants).
+Offline-first, installable, tablet-friendly POS for Philippine small businesses.
+Three profiles: **sari-sari**, **LPG**, and **restaurant**. Runs entirely in the browser via IndexedDB; no server required.
+
+## Features (by profile)
+
+- **All profiles**: touch tile catalog, cart, tender modal, editor mode with drag-and-drop reorder, PIN login (owner/cashier), reports (today, X/Z reading, top items, low stock, payment breakdown, date range + CSV export), receipts (on-screen preview + browser print + Web Bluetooth ESC/POS + share as image/text), backup/restore, PWA install.
+- **Sari-sari**: utang (customer ledger with payments), tingi-ready item extras, senior/PWD discount at tender.
+- **LPG**: refill vs new-tank vs accessories, cylinder pool (full/empty/on-loan), deposit accounting, delivery dispatch board.
+- **Restaurant**: table map, modifiers, kitchen ticket screen, dine-in/takeout, queue numbers, split bill.
+
+Money is always integer centavos. Peso formatting uses `Intl.NumberFormat('en-PH')`.
 
 ## Quick start
 
-```bash
-npm i
-npm run dev
+```
+npm install
+npm run dev -- --host
 ```
 
-## Phase status
+Open http://localhost:5173 on any device on your LAN.
 
-**Phase 1** — Sari-sari sell/checkout only.
+## Build & test
 
-- Onboarding flow (store name, profile, seed catalog)
-- Sari-sari POS: tile grid, cart, cash tender + change
-- English/Tagalog toggle
-- Dexie (IndexedDB) local persistence
+```
+npm run build     # -> dist/
+npm test -- --run # vitest, fake-indexeddb
+```
 
-LPG and Restaurant profiles are scaffolded but marked "coming soon".
+## Deploy
+
+See [DEPLOY.md](./DEPLOY.md).
+
+## Adding a new business profile
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## License
 
-MIT. Provided "AS IS" without warranty of any kind. Not certified for BIR compliance — receipts are marked "PROVISIONAL RECEIPT — NOT FOR BIR".
+MIT. Provided as-is, no warranty. Receipts are marked "PROVISIONAL RECEIPT — NOT FOR BIR"; use an accredited POS for BIR-compliant issuance.

@@ -1,7 +1,20 @@
 import Dexie, { type Table } from 'dexie';
 
 export interface SettingRow { key: string; value: unknown; }
-export interface UserRow { id: string; role: 'owner'|'cashier'; name: string; pin?: string; }
+export interface UserRow { id: string; role: 'owner'|'cashier'; name: string; pin?: string; pinHash?: string; pinSalt?: string; color?: string; }
+export interface ShiftRow {
+  id: string;
+  openedAt: number;
+  closedAt?: number;
+  openingFloatCentavos: number;
+  salesTotalCentavos: number;
+  cashTotalCentavos: number;
+  utangTotalCentavos: number;
+  gcashTotalCentavos: number;
+  otherTotalCentavos: number;
+  transactionCount: number;
+  userId: string;
+}
 export interface CategoryRow { id: string; name: string; order: number; }
 export interface ItemRow {
   id: string;
@@ -116,6 +129,7 @@ export class TindaDB extends Dexie {
   diningTables!: Table<TableRow, string>;
   orders!: Table<OrderRow, string>;
   auditLog!: Table<AuditLogRow, number>;
+  shifts!: Table<ShiftRow, string>;
 
   constructor() {
     super('tindapos');
@@ -171,6 +185,25 @@ export class TindaDB extends Dexie {
       diningTables: 'id, mapX, mapY, status',
       orders: 'id, tableId, status, mode, queueNumber',
       auditLog: '++id, ts, kind'
+    });
+    // Phase 5: add shifts table. Additive — all previous data remains valid.
+    this.version(4).stores({
+      settings: 'key',
+      users: 'id, role',
+      categories: 'id, order',
+      items: 'id, categoryId, archived, [categoryId+order]',
+      photos: 'id',
+      customers: 'id, name, balanceCentavos',
+      utangEntries: 'id, customerId, saleId, ts',
+      sales: 'id, ts, userId, paymentMethod, status',
+      saleLines: 'id, saleId, itemId, orderId',
+      discounts: 'id, saleId, type',
+      cylinders: 'id, sku, state',
+      deliveries: 'id, saleId, status, riderId',
+      diningTables: 'id, mapX, mapY, status',
+      orders: 'id, tableId, status, mode, queueNumber',
+      auditLog: '++id, ts, kind',
+      shifts: 'id, openedAt, closedAt, userId'
     });
   }
 }

@@ -1,18 +1,51 @@
 # Deploy
 
+TindaPOS is a static PWA — any static host works.
+
 ## Cloudflare Pages (preferred)
 
 1. Push repo to GitHub.
-2. In Cloudflare Pages: connect the repo.
-3. Build command: `npm run build`. Output directory: `dist`.
-4. Deploy.
+2. Cloudflare dashboard → Pages → Create → Connect your repo.
+3. Build command: `npm run build`
+4. Output directory: `dist`
+5. Deploy. Custom domain: Pages → Custom domains.
 
-## GitHub Pages (alternative)
+## GitHub Pages (Actions)
 
-1. `npm run build`.
-2. Publish `dist/` to `gh-pages` branch (e.g. via `gh-pages` npm package or GitHub Actions).
-3. Set base path in `vite.config.ts` if hosting under a subpath.
+Add `.github/workflows/pages.yml`:
 
-## Offline from folder
+```yaml
+name: Deploy
+on: { push: { branches: [main] } }
+permissions: { pages: write, id-token: write, contents: read }
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm ci && npm run build
+      - uses: actions/upload-pages-artifact@v3
+        with: { path: dist }
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: { name: github-pages, url: ${{ steps.deploy.outputs.page_url }} }
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4
+```
 
-The built `dist/` is fully static. You can serve it from any static host, LAN file share, or a USB stick with a tiny web server (e.g. `python -m http.server`). Because the app registers a service worker, once loaded it will run offline on the device.
+## Self-host from a folder
+
+```
+npm run build
+# serve dist/ with anything:
+npx serve dist
+# or:
+python -m http.server -d dist 8080
+# or nginx / caddy / lighttpd
+```
+
+Or, from an installed PWA: Settings → Data → Export self-host zip → unzip → serve.

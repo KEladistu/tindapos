@@ -2,14 +2,19 @@
 
 ## Adding a new business profile
 
-1. Create `src/profiles/<your-profile>/` with at minimum a `profile.ts` exporting a `BusinessProfile` (see `src/profiles/types.ts`).
-2. Optionally add `seed.ts` (default catalog) and `modules/` (profile-specific behaviors).
-3. Register the profile in `src/profiles/registry.ts`.
-4. Add i18n keys for any new UI in `src/i18n/en.ts` and `src/i18n/tl.ts`.
-5. Add unit tests under `tests/` for any new pure logic.
+Checklist (all paths under `src/`):
 
-## Code style
+1. `profiles/<id>/profile.ts` — export a `BusinessProfile` (id, name, itemSchema, defaultCategories, seedCatalog, modules, receiptTemplate, layoutDefaults).
+2. `profiles/<id>/seed.ts` — (optional) helper seed rows for extra tables.
+3. `profiles/registry.ts` — register the profile with `available: true`.
+4. `stores/settings.ts` — add the id to `ProfileId` union.
+5. `ui/<id>/<Name>POSScreen.tsx` — the profile's screen.
+6. `App.tsx` — route to the new screen based on `profileId`.
+7. `i18n/en.ts` and `i18n/tl.ts` — add strings under a `<id>.*` namespace.
+8. Add tests under `tests/`.
 
-- Money is always integer centavos (`Centavos`). Never use floats for cash.
-- All UI strings go through `t(key)`.
-- Keep engine/ pure — no React, no Dexie imports.
+Money is centavos (integer). Never store cash as float. Use `formatPHP`, `toCentavos`, `addC`, `mulC` from `engine/money.ts`.
+
+## Schema changes
+
+Add a new `this.version(N)` in `db/schema.ts` — **never delete or edit prior version() blocks**. Additive fields don't need index changes.

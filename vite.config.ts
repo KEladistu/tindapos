@@ -16,7 +16,10 @@ export default defineConfig({
         background_color: '#f8fafc',
         display: 'standalone',
         start_url: '/',
-        icons: []
+        icons: [
+          { src: 'icons/icon.svg', sizes: '192x192 512x512 any', type: 'image/svg+xml', purpose: 'any' },
+          { src: 'icons/icon-maskable.svg', sizes: '512x512', type: 'image/svg+xml', purpose: 'maskable' }
+        ]
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}']
