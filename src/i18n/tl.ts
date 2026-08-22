@@ -52,7 +52,45 @@ const tl: Record<string, string> = {
   'editor.dropImage': 'I-drop ang larawan dito',
   'editor.confirmDeleteItem': 'Alisin ang "{name}"?',
   'editor.confirmDeleteCategory': 'Alisin ang kategoryang "{name}"?',
-  'editor.categoryNotEmpty': 'May laman pa ang kategorya — alisin muna ang mga item.'
+  'editor.categoryNotEmpty': 'May laman pa ang kategorya — alisin muna ang mga item.',
+
+  'cat.refill': 'Refill',
+  'cat.newTank': 'Bagong Tangke',
+  'cat.accessories': 'Accessories',
+
+  'header.pos': 'POS',
+  'header.deliveries': 'Deliveries',
+
+  'lpg.refill': 'Refill',
+  'lpg.newTank': 'Bagong Tangke',
+  'lpg.accessories': 'Accessories',
+  'lpg.brand': 'Brand',
+  'lpg.size': 'Sukat',
+  'lpg.swap': 'Palit',
+  'lpg.withEmpty': 'May dalang empty (palit)',
+  'lpg.withoutEmpty': 'Walang empty (unang bili)',
+  'lpg.mode.deposit': 'Deposito (paupa ang tangke)',
+  'lpg.mode.sold': 'Bili nang tuluyan',
+  'lpg.returnEmpty': 'Ibalik ang empty & isauli ang deposito',
+  'lpg.deposit': 'Deposito',
+  'lpg.customerName': 'Pangalan ng customer',
+  'lpg.phone': 'Numero',
+  'lpg.address': 'Adres',
+  'lpg.assignedRider': 'Rider',
+  'lpg.forDelivery': 'Para i-deliver',
+  'lpg.deliveries': 'Mga Deliveries',
+  'lpg.pending': 'Nakabinbin',
+  'lpg.outForDelivery': 'Papunta',
+  'lpg.delivered': 'Naihatid',
+  'lpg.markOutForDelivery': 'Papunta na',
+  'lpg.markDelivered': 'Naihatid na',
+  'lpg.cancelDelivery': 'Kanselahin',
+  'lpg.stockAtAGlance': 'Stock',
+  'lpg.full': 'Puno',
+  'lpg.empty': 'Walang laman',
+  'lpg.onLoan': 'Nakapaupa',
+  'lpg.noStock': 'Walang stock na puno para sa SKU na ito.',
+  'lpg.recordAnyway': 'Itala pa rin'
 };
 
 export default tl;

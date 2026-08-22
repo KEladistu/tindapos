@@ -4,6 +4,7 @@ import { profileRegistry } from '../../profiles/registry';
 import { useSettings, type ProfileId } from '../../stores/settings';
 import { useT } from '../../i18n';
 import { Button } from '../common/Button';
+import { seedCylinders } from '../../profiles/lpg/seed';
 
 interface Props { db: TindaDB; }
 
@@ -42,6 +43,9 @@ export function OnboardingFlow({ db }: Props) {
           extras: it.extras
         }))
       );
+    }
+    if (profileId === 'lpg') {
+      await db.cylinders.bulkPut(seedCylinders());
     }
     await setStore(storeName.trim(), profileId);
     setBusy(false);

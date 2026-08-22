@@ -3,6 +3,7 @@ import { db } from './db/schema';
 import { useSettings } from './stores/settings';
 import { OnboardingFlow } from './ui/onboarding/OnboardingFlow';
 import { POSScreen } from './ui/pos/POSScreen';
+import { LPGPOSScreen } from './ui/lpg/LPGPOSScreen';
 import { t } from './i18n';
 import { useSession } from './stores/session';
 import { useEditor, hydrateEditorSettings } from './stores/editor';
@@ -64,7 +65,9 @@ export default function App() {
         </div>
       </header>
       <main className="flex-1 overflow-hidden">
-        {onboarded ? <POSScreen /> : <OnboardingFlow db={db} />}
+        {onboarded
+          ? (profileId === 'lpg' ? <LPGPOSScreen /> : <POSScreen />)
+          : <OnboardingFlow db={db} />}
       </main>
     </div>
   );

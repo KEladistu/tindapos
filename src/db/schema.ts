@@ -43,6 +43,8 @@ export interface SaleLineRow {
   unitPriceCentavos: number;
   qty: number;
   lineTotalCentavos: number;
+  notes?: string;
+  extras?: Record<string, unknown>;
 }
 export interface DiscountRow {
   id: string;
@@ -50,8 +52,29 @@ export interface DiscountRow {
   type: 'senior'|'pwd'|'manual';
   amountCentavos: number;
 }
-export interface CylinderRow { id: string; sku: string; state: 'full'|'empty'|'out'; }
-export interface DeliveryRow { id: string; saleId: string; status: string; riderId?: string; }
+export interface CylinderRow {
+  id: string;
+  sku: string;
+  state: 'full'|'empty'|'on-loan';
+  customerId?: string;
+  depositCentavos?: number;
+  createdAt: number;
+  updatedAt: number;
+}
+export type DeliveryStatus = 'pending' | 'out' | 'delivered' | 'cancelled';
+export interface DeliveryRow {
+  id: string;
+  saleId: string;
+  status: DeliveryStatus;
+  riderId?: string;
+  customerName: string;
+  phone: string;
+  address: string;
+  itemsSummary: string;
+  totalCentavos: number;
+  createdAt: number;
+  updatedAt: number;
+}
 export interface TableRow { id: string; mapX: number; mapY: number; status: string; }
 export interface OrderRow { id: string; tableId: string; status: string; }
 export interface AuditLogRow { id?: number; ts: number; kind: string; payload?: unknown; }
@@ -75,7 +98,7 @@ export class TindaDB extends Dexie {
 
   constructor() {
     super('tindapos');
-    this.version(1).stores({
+    this.version(2).stores({
       settings: 'key',
       users: 'id, role',
       categories: 'id, order',

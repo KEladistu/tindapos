@@ -52,7 +52,45 @@ const en: Record<string, string> = {
   'editor.dropImage': 'Drop image here',
   'editor.confirmDeleteItem': 'Delete "{name}"?',
   'editor.confirmDeleteCategory': 'Delete category "{name}"?',
-  'editor.categoryNotEmpty': 'Category is not empty — move or delete its items first.'
+  'editor.categoryNotEmpty': 'Category is not empty — move or delete its items first.',
+
+  'cat.refill': 'Refill',
+  'cat.newTank': 'New Tank',
+  'cat.accessories': 'Accessories',
+
+  'header.pos': 'POS',
+  'header.deliveries': 'Deliveries',
+
+  'lpg.refill': 'Refill',
+  'lpg.newTank': 'New Tank',
+  'lpg.accessories': 'Accessories',
+  'lpg.brand': 'Brand',
+  'lpg.size': 'Size',
+  'lpg.swap': 'Swap',
+  'lpg.withEmpty': 'Customer has empty (swap)',
+  'lpg.withoutEmpty': 'No empty (first-time buyer)',
+  'lpg.mode.deposit': 'Deposit (loan cylinder)',
+  'lpg.mode.sold': 'Sold outright',
+  'lpg.returnEmpty': 'Return empty & refund deposit',
+  'lpg.deposit': 'Deposit',
+  'lpg.customerName': 'Customer name',
+  'lpg.phone': 'Phone',
+  'lpg.address': 'Address',
+  'lpg.assignedRider': 'Assigned rider',
+  'lpg.forDelivery': 'For delivery',
+  'lpg.deliveries': 'Deliveries',
+  'lpg.pending': 'Pending',
+  'lpg.outForDelivery': 'Out for delivery',
+  'lpg.delivered': 'Delivered',
+  'lpg.markOutForDelivery': 'Mark out',
+  'lpg.markDelivered': 'Mark delivered',
+  'lpg.cancelDelivery': 'Cancel',
+  'lpg.stockAtAGlance': 'Stock at a glance',
+  'lpg.full': 'Full',
+  'lpg.empty': 'Empty',
+  'lpg.onLoan': 'On loan',
+  'lpg.noStock': 'No full cylinder in stock for this SKU.',
+  'lpg.recordAnyway': 'Record anyway'
 };
 
 export default en;
