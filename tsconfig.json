@@ -14,7 +14,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "allowSyntheticDefaultImports": true,
-    "types": ["vitest/globals", "node"]
+    "types": ["vitest/globals", "node"],
+    "noEmit": true
   },
   "include": ["src", "tests"],
   "references": [{ "path": "./tsconfig.node.json" }]
