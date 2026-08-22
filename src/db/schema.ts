@@ -68,7 +68,7 @@ export class TindaDB extends Dexie {
   discounts!: Table<DiscountRow, string>;
   cylinders!: Table<CylinderRow, string>;
   deliveries!: Table<DeliveryRow, string>;
-  tables!: Table<TableRow, string>;
+  diningTables!: Table<TableRow, string>;
   orders!: Table<OrderRow, string>;
   auditLog!: Table<AuditLogRow, number>;
 
@@ -87,7 +87,7 @@ export class TindaDB extends Dexie {
       discounts: 'id, saleId, type',
       cylinders: 'id, sku, state',
       deliveries: 'id, saleId, status, riderId',
-      tables: 'id, mapX, mapY, status',
+      diningTables: 'id, mapX, mapY, status',
       orders: 'id, tableId, status',
       auditLog: '++id, ts, kind'
     });

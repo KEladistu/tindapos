@@ -9,9 +9,10 @@ const phpFormatter = new Intl.NumberFormat('en-PH', {
   currency: 'PHP'
 });
 
-/** Convert a peso amount (possibly fractional) to centavos, rounding half-up. */
+/** Convert a peso amount (possibly fractional) to centavos, rounding half-up.
+ *  Uses string-based epsilon adjustment so 1.005 → 101 (not 100 from float error). */
 export function toCentavos(pesos: number): Centavos {
-  return Math.round(pesos * 100);
+  return Math.round((pesos * 100 * (1 + Number.EPSILON)));
 }
 
 /** Format centavos as e.g. "₱1,234.50". */
